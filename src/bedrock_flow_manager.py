@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 from botocore.exceptions import ClientError
 import logging
-from typing import Tuple, Optional, Dict, List
+from typing import Tuple, Optional, Dict, List, Union
 import argparse
 import sys
 from termcolor import colored
@@ -728,7 +728,7 @@ class BedrockFlowManager:
             print_colored("Displaying raw response:", 'info')
             print(response)
 
-    def test_flow(self, flow_id: str, alias_id: str, input_text: str | list, is_iterator: bool = False) -> str:
+    def test_flow(self, flow_id: str, alias_id: str, input_text: Union[str, list], is_iterator: bool = False) -> str:
         """Test the created flow with multi-turn support"""
         print_colored("\n🧪 Step 5: Testing Flow", 'step')
         print_colored("-" * 30, 'info')
@@ -842,7 +842,7 @@ class BedrockFlowManager:
             print_colored(f"❌ Error exporting flow definition: {str(e)}", 'error')
             raise e
 
-    def _prepare_input_payload(self, input_data: str | dict, is_iterator: bool, execution_id: str = None) -> dict:
+    def _prepare_input_payload(self, input_data: Union[str, dict], is_iterator: bool, execution_id: str = None) -> dict:
         """Prepare input payload for flow invocation"""
 
         # Handle dictionary input for multi-turn
